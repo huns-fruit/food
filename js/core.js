@@ -27,6 +27,11 @@ var CHANNEL = "bulk";
 /* 새 주문을 사장님 폰으로 푸시 (소매몰과 같은 ntfy 주제) */
 var NTFY_URL = "https://ntfy.sh/hoonie-dangu-order-914288";
 
+/* ── 이용 제한 사업자 ──
+   사업자등록번호 10자리를 하이픈 없이 적습니다. 예) "1234567890"
+   여기에 적힌 번호는 입장 게이트와 주문이 모두 막힙니다. 비어 있으면 제한 없음. */
+var BLOCKED_BIZ = [];
+
 function isoAt(ts){ return new Date(ts || Date.now()).toISOString(); }
 
 function sbOn(){

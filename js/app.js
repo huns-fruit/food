@@ -4,7 +4,7 @@
 var CART_KEY = "hoonie_bulk_cart_v1";
 var CUST_KEY = "hoonie_bulk_customer_v1";
 
-var state = { cat: "veg", q: "", cart: {}, view: "shop", order: null };
+var state = { cat: "veg", q: "", cart: {}, view: "shop", order: null, biz: null };
 
 /* ────────────────────────────────────────────────
    1. 장바구니 저장 · 계산
@@ -416,6 +416,9 @@ function toggleReceipt(){
   if (t === "expense"){
     $("#fReceiptNo").placeholder = "사업자번호 10자리";
     $("#fReceiptNo").inputMode = "numeric";
+    /* 확인한 사업자번호를 그대로 채워 둡니다 */
+    var rn = $("#fReceiptNo");
+    if (rn && state.biz && !String(rn.value || "").trim()) rn.value = bizDigits(state.biz.bizNo);
   } else if (t === "income"){
     $("#fReceiptNo").placeholder = "휴대폰번호 (숫자만)";
     $("#fReceiptNo").inputMode = "numeric";
@@ -424,6 +427,12 @@ function toggleReceipt(){
 function two(n){ return (n < 10 ? "0" : "") + n; }
 
 function submitOrder(){
+  /* 입장 확인이 없거나 이용 제한 사업자가 되었으면 주문을 받지 않습니다 */
+  if (!state.biz || bizBlocked(state.biz.bizNo)){
+    logoutBiz();
+    showGate(null, BLOCKED_MSG);
+    return;
+  }
   if (!canOrder()){ toast(shortGapText() || "최소주문금액을 확인해 주세요"); return; }
   var f = readForm();
   if (!validate(f)) return;
@@ -457,6 +466,10 @@ function submitOrder(){
     receiptType: f.receiptType,
     receiptNo: (f.receiptType !== "none" ? String(f.receiptNo || "").replace(/[^0-9]/g, "") : ""),
     receiptLabel: receiptLabel(f.receiptType),
+    /* 사업자 확인 정보 — 가벼운 값만 넣습니다 (사진 데이터는 보내지 않음) */
+    bizNo: state.biz.bizNo,
+    bizCertName: state.biz.bizCertName,
+    bizCertAttached: true,
     items: items,
     status: "received", statusAt: now.getTime()
   };
@@ -500,6 +513,7 @@ function renderDone(ord, saved){
     +   '<button type="button" class="dcopy" data-copy-order="' + esc(ord.no) + '">복사</button></div>'
     + '<div class="drow"><span>받는 날</span><b>' + esc(ord.slotLabel) + '</b></div>'
     + '<div class="drow"><span>상호</span><b>' + esc(ord.shopName) + ' · ' + esc(ord.manager) + '</b></div>'
+    + (ord.bizNo ? '<div class="drow"><span>사업자번호</span><b>' + esc(ord.bizNo) + '</b></div>' : '')
     + '<div class="drow"><span>연락처</span><b>' + esc(ord.phone) + '</b></div>'
     + '<div class="drow"><span>배달 주소</span><b>' + esc(ord.addr) + '</b></div>'
     + (ord.memo ? '<div class="drow"><span>요청사항</span><b>' + esc(ord.memo) + '</b></div>' : '')
@@ -594,6 +608,7 @@ function closePolicy(){
    ──────────────────────────────────────────────── */
 var VIEWS = { shop: "#viewShop", cart: "#viewCart", checkout: "#viewCheckout", done: "#viewDone" };
 function setView(v){
+  if (!state.biz){ showGate(loadBiz(), false); return; }
   state.view = v;
   for (var k in VIEWS) $(VIEWS[k]).hidden = (k !== v);
   if (v === "cart") renderCart();
@@ -604,8 +619,8 @@ function setView(v){
 function updateCartbar(){
   var n = cartCount(), sum = subtotal();
   var bar = $("#cartbar");
-  bar.hidden = !(state.view === "shop" && n > 0);
-  document.body.classList.toggle("hasbar", state.view === "shop" && n > 0);
+  bar.hidden = !(state.biz && state.view === "shop" && n > 0);
+  document.body.classList.toggle("hasbar", !!(state.biz && state.view === "shop" && n > 0));
   $("#cbBadge").textContent = n;
   $("#cbAmt").textContent = money(sum) + "원";
 }
@@ -622,19 +637,56 @@ function setQuery(v){
 }
 
 /* ────────────────────────────────────────────────
-   9. 시작
+   9. 시작 — 사업자 확인을 통과해야만 상품·가격을 그립니다
+   (확인 전에는 목록·가격·검색·장바구니 바를 DOM에 만들지 않습니다)
    ──────────────────────────────────────────────── */
-function init(){
-  loadCart();
+function applyBizToForm(biz){
+  if (!biz) return;
+  var shop = $("#fShop");
+  if (shop && biz.bizName) shop.value = biz.bizName;
+  var bno = $("#fBizNo");
+  if (bno) bno.value = biz.bizNo || "";
+  if (fieldVal("#fReceipt") === "expense"){
+    var rn = $("#fReceiptNo");
+    if (rn && !String(rn.value || "").trim()) rn.value = bizDigits(biz.bizNo);
+  }
+}
+
+function enterShop(biz, fresh){
+  state.biz = biz || null;
+  $("#viewGate").hidden = true;
+  loadCustomer();
   renderTimeOptions();
   renderList();
   renderCart();
   renderCheckout();
   $("#cutoffNote").textContent = cutoffLabel();
   $("#cutoffNote").classList.toggle("late", cutoffPassed());
+  $("#hdBizName").textContent = (biz && biz.bizName) ? biz.bizName : "사업자";
+  applyBizToForm(biz);
+  setView("shop");
   updateCartbar();
-  loadCustomer();
+  if (fresh) toast("사업자 확인 완료 · 가격이 열렸어요");
+}
 
+function init(){
+  initGate();
+  wireShop();
+  loadCart();
+
+  var biz = loadBiz();
+  if (biz && biz.bizNo && bizBlocked(biz.bizNo)){
+    /* 저장된 사업자가 이용 제한 명단에 있으면 즉시 로그아웃하고 게이트로 보냅니다 */
+    logoutBiz();
+    showGate(null, BLOCKED_MSG);
+  } else if (bizRecordOk(biz)){
+    enterShop(biz, false);
+  } else {
+    showGate(biz, false);
+  }
+}
+
+function wireShop(){
   /* 상품 탭 */
   $$("#tabs button").forEach(function(b){
     b.addEventListener("click", function(){ switchCat(b.getAttribute("data-cat")); });
@@ -655,6 +707,13 @@ function init(){
 
   /* 화면 이동 */
   $("#cartbar").addEventListener("click", function(){ setView("cart"); });
+  $("#bizChange").addEventListener("click", function(){
+    var biz = state.biz || loadBiz();
+    gateSetFile(null);
+    var cert = $("#gCert");
+    if (cert) cert.value = "";
+    showGate(biz, false);
+  });
   $("#cartBack").addEventListener("click", function(){ setView("shop"); });
   $("#toCheckout").addEventListener("click", function(){
     if (!canOrder()){ toast(shortGapText() || "최소주문금액을 확인해 주세요"); return; }
@@ -687,7 +746,7 @@ function init(){
     if (hit.hasAttribute("data-go-shop")){ setView("shop"); return; }
     if (hit.hasAttribute("data-new-order")){
       state.order = null;
-      renderList(); renderCart(); renderCheckout(); loadCustomer();
+      renderList(); renderCart(); renderCheckout(); loadCustomer(); applyBizToForm(state.biz);
       setView("shop");
       return;
     }
