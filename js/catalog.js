@@ -4,7 +4,7 @@
    사진은 assets/img/*.webp (360x360, 5~14KB) 를 상대 경로로 씁니다.
    사진이 있는 36종은 사진을, 나머지는 품목별 색 타일 + 이모지 썸네일로 보여 줍니다 (404 없음).
    모든 unit 은 실제 거래 중량(kg) 또는 개수·수(개입)를 함께 적었습니다.
-   가격은 2026-11 말 도매 참고 시세로 채운 임시 가격입니다. */
+   과일은 2026-11-26 사장님 단가표(안동품산물 유통단지길) 기준 상장가 + 3,000원으로 맞췄습니다. */
 
 var IMG = {
   /* 채소 */
@@ -138,7 +138,8 @@ var BULK_VEGETABLES = [
   { id: "veg-gosari",         name: "고사리 (삶은)",    unit: "1kg",                      price: 11000, emoji: "🌿" }
 ];
 
-/* 식자재 과일 — 기존 14품목 + 신규 11품목 = 25품목 */
+/* 식자재 과일 — 기존 14품목 + 신규 11품목 + 2026-11-26 단가표 박스 15품목 = 40품목
+   (청포도 2kg 은 단가표 기준 8.6kg 박스로 교체했습니다) */
 var BULK_FRUITS = [
   /* ── 기존 품목 ── */
   { id: "fruit-lemon",        name: "레몬",             unit: "50개입",                          price: 25000, img: "lemon" },
@@ -159,7 +160,7 @@ var BULK_FRUITS = [
   /* ── 신규 ── */
   { id: "fruit-orange",       name: "오렌지",           unit: "1박스 · 18kg",             price: 69000, emoji: "🍊" },
   { id: "fruit-lime",         name: "라임",             unit: "36개입",                   price: 18000, emoji: "🍋" },
-  { id: "fruit-green-grape",  name: "청포도",           unit: "1박스 · 2kg",              price: 16000, emoji: "🍇" },
+  { id: "fruit-green-grape",  name: "청포도 (미국 오텀킹)", unit: "8.6kg 1박스",           price: 92000, emoji: "🍇" },
   { id: "fruit-shine-muscat", name: "샤인머스캣",       unit: "1박스 · 2kg",              price: 28000, emoji: "🍇", badge: "업소추천" },
   { id: "fruit-blueberry",    name: "블루베리 (냉동)",  unit: "1kg",                      price: 9500,  emoji: "🫐", desc: "스무디·디저트용" },
   { id: "fruit-avocado",      name: "아보카도",         unit: "5.5kg · 25과 1박스",       price: 47000, emoji: "🥑" },
@@ -167,7 +168,24 @@ var BULK_FRUITS = [
   { id: "fruit-mandarin",     name: "감귤 (조생)",      unit: "1박스 · 10kg",             price: 18000, emoji: "🍊" },
   { id: "fruit-pear",         name: "신고배",           unit: "15kg 1박스",               price: 45000, emoji: "🍐" },
   { id: "fruit-melon",        name: "메론",             unit: "4수 1박스",                price: 28000, emoji: "🍈" },
-  { id: "fruit-watermelon",   name: "수박",             unit: "1통 · 약 8kg",             price: 19000, emoji: "🍉" }
+  { id: "fruit-watermelon",   name: "수박",             unit: "1통 · 약 8kg",             price: 19000, emoji: "🍉" },
+
+  /* ── 2026-11-26 단가표(안동품산물 유통단지길) 박스 단위 — 상장가 + 3,000원 ── */
+  { id: "fruit-grape-red",    name: "적포도 (미국 크림슨)", unit: "8.6kg 1박스",            price: 65000, emoji: "🍇" },
+  { id: "fruit-grape-black",  name: "블랙포도 (미국 아도라)", unit: "8.6kg 1박스",          price: 74000, emoji: "🍇" },
+  { id: "fruit-kiwi-gold-nz", name: "골드키위 (뉴질랜드)", unit: "5.8kg · 44과 1박스",      price: 44000, img: "kiwi" },
+  { id: "fruit-kiwi-green",   name: "그린키위 (국내산 참다래)", unit: "10kg · 65과 1박스", price: 54000, img: "kiwi" },
+  { id: "fruit-mango",        name: "망고 (태국 남동마이)", unit: "5kg 1박스",             price: 69000, emoji: "🥭" },
+  { id: "fruit-mango-apple",  name: "애플망고 (페루)",    unit: "5kg 1박스",                price: 93000, emoji: "🥭" },
+  { id: "fruit-hwanggeum-5", name: "황금향 (제주)",      unit: "5kg 1박스",                price: 24000, emoji: "🍊" },
+  { id: "fruit-hwanggeum-3", name: "황금향 (제주)",      unit: "3kg 1박스",                price: 20000, emoji: "🍊" },
+  { id: "fruit-lemon-box",    name: "레몬 (칠레)",        unit: "17kg · 140과 1박스",       price: 50000, img: "lemon" },
+  { id: "fruit-grapefruit-box", name: "자몽 (남아공)",    unit: "15kg · 35~45과 1박스",     price: 61000, img: "grapefruit" },
+  { id: "fruit-cheongjamong", name: "청자몽 (미국 메로골드)", unit: "15kg 1박스",           price: 45000, emoji: "🍊" },
+  { id: "fruit-dragonfruit",  name: "용과 (베트남)",      unit: "5kg 1박스",                price: 26000, emoji: "🐉" },
+  { id: "fruit-blueberry-fresh", name: "생블루베리 (칠레)", unit: "125g×12팩 1박스",        price: 43000, emoji: "🫐" },
+  { id: "fruit-pomegranate",  name: "석류 (미국)",        unit: "5.5kg · 11수 1박스",       price: 49000, emoji: "🍒" },
+  { id: "fruit-pineapple-honey", name: "골드파인애플 (필리핀 허니디럭스)", unit: "5~7수 1박스", price: 41000, img: "pineapple" }
 ];
 
 /* 화면에서 쓰는 한 벌 목록 (cat 키를 붙여 둡니다) */
