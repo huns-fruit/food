@@ -143,7 +143,7 @@ var BULK_FRUITS = [
   /* ── 기존 품목 ── */
   { id: "fruit-lemon",        name: "레몬",             unit: "50개입",                          price: 25000, img: "lemon" },
   { id: "fruit-grapefruit",   name: "자몽",             unit: "25개입",                          price: 37500, img: "grapefruit" },
-  { id: "fruit-banana",       name: "바나나",           unit: "12/14발 1박스 · 약 13kg · 필리핀/베트남산", price: 14000, img: "banana", badge: "인기" },
+  { id: "fruit-banana",       name: "바나나",           unit: "12/14발 1박스 · 약 13kg · 필리핀/베트남산", price: 28000, img: "banana", badge: "인기" },
   { id: "fruit-pineapple",    name: "골드파인애플",     unit: "6수 1박스",                       price: 43000, img: "pineapple", badge: "업소추천" },
   { id: "fruit-pineapple-b",  name: "골드파인애플",     unit: "7~9수 · B급",                     price: 18000, img: "pineapple" },
   { id: "fruit-apple-3",      name: "안동 사과",        unit: "20kg · 상 3번",                   price: 40000, img: "apple" },
@@ -157,12 +157,12 @@ var BULK_FRUITS = [
   { id: "fruit-bansee-s",     name: "반시",             unit: "5kg · S",                         price: 7000,  img: "persimmon" },
 
   /* ── 신규 ── */
-  { id: "fruit-orange",       name: "오렌지",           unit: "1박스 · 18kg",             price: 45000, emoji: "🍊" },
+  { id: "fruit-orange",       name: "오렌지",           unit: "1박스 · 18kg",             price: 69000, emoji: "🍊" },
   { id: "fruit-lime",         name: "라임",             unit: "36개입",                   price: 18000, emoji: "🍋" },
   { id: "fruit-green-grape",  name: "청포도",           unit: "1박스 · 2kg",              price: 16000, emoji: "🍇" },
   { id: "fruit-shine-muscat", name: "샤인머스캣",       unit: "1박스 · 2kg",              price: 28000, emoji: "🍇", badge: "업소추천" },
   { id: "fruit-blueberry",    name: "블루베리 (냉동)",  unit: "1kg",                      price: 9500,  emoji: "🫐", desc: "스무디·디저트용" },
-  { id: "fruit-avocado",      name: "아보카도",         unit: "24개입 1박스",             price: 33000, emoji: "🥑" },
+  { id: "fruit-avocado",      name: "아보카도",         unit: "5.5kg · 25과 1박스",       price: 47000, emoji: "🥑" },
   { id: "fruit-strawberry",   name: "딸기 (업소용)",    unit: "1박스 · 2kg",              price: 39000, emoji: "🍓", desc: "겨울 시즌 · 디저트용" },
   { id: "fruit-mandarin",     name: "감귤 (조생)",      unit: "1박스 · 10kg",             price: 18000, emoji: "🍊" },
   { id: "fruit-pear",         name: "신고배",           unit: "15kg 1박스",               price: 45000, emoji: "🍐" },
