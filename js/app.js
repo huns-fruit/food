@@ -93,18 +93,26 @@ function matches(p, q){
   var hay = norm(p.name) + "|" + norm(p.unit) + "|" + norm(p.desc || "") + "|" + norm(p.id);
   return hay.indexOf(q) > -1;
 }
+/* 사진이 없는 품목의 타일 색을 품목 id 로 정합니다 (같은 품목은 늘 같은 색) */
+function toneOf(p){
+  var s = String((p && p.id) || ""), h = 0;
+  for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 9973;
+  return h % 8;
+}
 function thumbHtml(p, cls){
-  var inner;
+  var inner, tone = "";
   if (p.img && IMG[p.img]){
     inner = '<img src="' + IMG[p.img] + '" alt="' + esc(p.name) + '" loading="lazy" decoding="async" width="96" height="96">';
   } else {
+    /* 품목별 색 타일 + 이모지 — 사진이 없어도 깨지지 않고 단정하게 보입니다 */
+    tone = " tone t" + toneOf(p);
     inner = '<span class="pemo" aria-hidden="true">' + (p.emoji || CATS[p.cat].emoji) + '</span>';
   }
   var badge = "";
   if (!cls && p.badge){
     badge = '<span class="pbadge ' + (p.badge === "인기" ? "hot" : "pick") + '">' + esc(p.badge) + '</span>';
   }
-  return '<div class="' + (cls || "pthumb") + '">' + inner + badge + '</div>';
+  return '<div class="' + (cls || "pthumb") + tone + '">' + inner + badge + '</div>';
 }
 /* 받침에 따라 조사를 고릅니다 (예: 식자재 과일 + 을 / 식자재 채소 + 를) */
 function josa(word, pair){
@@ -638,6 +646,15 @@ function updateCartbar(){
   $("#cbBadge").textContent = n;
   $("#cbAmt").textContent = money(sum) + "원";
 }
+/* 탭의 품목 수는 목록에서 직접 셉니다 (품목을 늘려도 숫자가 어긋나지 않게) */
+function setTabCounts(){
+  $$("#tabs button").forEach(function(b){
+    var k = b.getAttribute("data-cat"), n = 0;
+    for (var i = 0; i < PRODUCTS.length; i++) if (PRODUCTS[i].cat === k) n++;
+    var em = b.querySelector("em");
+    if (em) em.textContent = n;
+  });
+}
 function switchCat(key){
   if (!CATS[key]) return;
   state.cat = key;
@@ -671,6 +688,7 @@ function enterShop(biz, fresh){
   $("#viewGate").hidden = true;
   loadCustomer();
   renderTimeOptions();
+  setTabCounts();
   renderList();
   renderCart();
   renderCheckout();
