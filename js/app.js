@@ -6,6 +6,15 @@ var CUST_KEY = "hoonie_bulk_customer_v1";
 
 var state = { cat: "veg", q: "", cart: {}, view: "shop", order: null };
 
+/* 목적격 조사(을/를) 붙이기 — 받침 있는 말은 '을', 없는 말은 '를' (예: 식자재 과일을 / 식자재 채소를) */
+function withObjParticle(word){
+  var s = String(word || "");
+  if (!s) return s;
+  var c = s.charCodeAt(s.length - 1);
+  var hasJong = (c >= 0xAC00 && c <= 0xD7A3) && ((c - 0xAC00) % 28) !== 0;
+  return s + (hasJong ? "을" : "를");
+}
+
 /* ────────────────────────────────────────────────
    1. 장바구니 저장 · 계산
    ──────────────────────────────────────────────── */
@@ -194,7 +203,7 @@ function minBoxHtml(withBar){
   var t = catTotals();
   var absent = t.veg === 0 ? "veg" : (t.fruit === 0 ? "fruit" : null);
   if (absent){
-    h += '<p class="minhint">' + CATS[absent].emoji + ' ' + esc(CATS[absent].label) + '를 함께 담으면 '
+    h += '<p class="minhint">' + CATS[absent].emoji + ' ' + esc(withObjParticle(CATS[absent].label)) + ' 함께 담으면 '
       + esc(CATS[absent].minText) + ' 이상부터 주문할 수 있어요.</p>';
   }
   h += '</section>';
