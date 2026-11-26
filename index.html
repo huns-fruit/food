@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1E293B">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%A5%AC%3C/text%3E%3C/svg%3E">
+<title>훈이네과일야채 단구점 | 식자재 주문 (식당·카페 대용량)</title>
+<meta name="description" content="원주 단구점 훈이네과일야채 식자재 주문. 식당·카페 대용량 채소(5만 원 이상)·과일(10만 원 이상)을 박스 단위로, 원주 시내권 배달 · 낮 12시 마감 · 무통장입금.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="css/base.css?v=20261126-bulk2">
+<link rel="stylesheet" href="css/bulk.css?v=20261126-bulk2">
+</head>
+<body>
+<div class="app">
+
+<!-- ══ 상품 화면 ═════════════════════════════════ -->
+<main id="viewShop">
+  <div class="topbar" role="note">
+    <p><b>식당·카페 대용량 식자재 전용 주문몰</b><span class="tb-sep">·</span>가정용 소매는 <a href="https://huns-fruit.github.io/">일반몰</a>을 이용해 주세요</p>
+  </div>
+  <header class="hd">
+    <div class="hd-row">
+      <div class="hd-brand">
+        <span class="hd-name">훈이네과일야채</span>
+        <span class="hd-branch">단구점</span>
+        <span class="hd-bulk">식자재 전문</span>
+      </div>
+      <a class="hd-call" href="tel:0337651531" aria-label="가게 전화 걸기">📞 전화</a>
+    </div>
+    <div class="hd-search">
+      <span class="hd-ico" aria-hidden="true">🔍</span>
+      <input id="q" type="search" inputmode="search" enterkeyhint="search" autocapitalize="off" autocomplete="off" placeholder="품목을 검색해 보세요 (예: 양파, 감자)" aria-label="품목 검색">
+      <button class="hd-clear" id="qClear" type="button" aria-label="검색어 지우기" hidden>✕</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">식당 · 카페 · 식자재 대용량</p>
+    <h1>채소도 과일도 <b>박스째</b> 담아 가세요</h1>
+    <p class="hero-sub">원주 단구동 매장에서 매일 들여오는 식자재를 도매 단위로 준비합니다.</p>
+    <ul class="facts">
+      <li><span class="fi">🛵</span><div><b>원주 시내권 배달</b><br>시외는 전화 문의</div></li>
+      <li><span class="fi">🥬</span><div><b>식자재 채소</b><br>50,000원 이상</div></li>
+      <li><span class="fi">🍎</span><div><b>식자재 과일</b><br>100,000원 이상</div></li>
+      <li class="f-close"><span class="fi">⏰</span><div><b>낮 12시 마감</b><br>이후 주문은 그 다음날</div></li>
+    </ul>
+    <div class="cutoff" id="cutoffNote">낮 12시 마감</div>
+  </section>
+
+  <nav class="tabs" id="tabs" role="tablist" aria-label="상품 구분">
+    <button type="button" data-cat="veg" class="on" role="tab">🥬 식자재 채소 <em>30</em></button>
+    <button type="button" data-cat="fruit" role="tab">🍎 식자재 과일 <em>14</em></button>
+  </nav>
+
+  <section class="listsec">
+    <div class="lhead"><h2 id="listTitle">식자재 채소</h2><span class="n" id="listCount">30개 품목</span></div>
+    <div id="list"></div>
+    <div class="empty" id="empty" hidden></div>
+  </section>
+
+  <div class="band"></div>
+
+  <section class="guide">
+    <h3>주문 안내</h3>
+    <ol class="steps">
+      <li><b>담기</b><span>박스·망 단위로 장바구니에 담습니다.</span></li>
+      <li><b>주문서 작성</b><span>상호 · 담당자 · 배달 주소 · 받는 날짜와 시간을 적어 주세요.</span></li>
+      <li><b>무통장입금</b><span>입금이 확인되면 준비해서 배달을 시작합니다.</span></li>
+    </ol>
+    <dl class="cond">
+      <dt>배달 권역</dt><dd>원주 시내권만 배달합니다. 시외·기업도시 등은 <a href="tel:0337651531">033-765-1531</a>로 문의해 주세요.</dd>
+      <dt>최소주문</dt><dd>식자재 채소 50,000원 이상 · 식자재 과일 100,000원 이상 (함께 주문하면 각각 채워야 합니다)</dd>
+      <dt>마감</dt><dd>낮 12시 · 이후 주문은 그 다음날 오전 배달</dd>
+      <dt>결제</dt><dd>무통장입금 (NH농협은행 302-1803-5017-81 · 예금주 황관훈)</dd>
+    </dl>
+    <p class="gnote">가격은 입고 시세에 따라 달라질 수 있고, 주문하신 시점의 가격이 적용됩니다. 사진은 상품 이해를 돕기 위한 예시입니다.</p>
+  </section>
+
+  <!-- 사업자 정보 · 약관 -->
+  <footer class="pgfoot">
+    <h3>사업자 정보</h3>
+    <dl class="pf-dl">
+      <dt>상호</dt><dd>훈이네과일야채</dd>
+      <dt>대표자</dt><dd>황관훈</dd>
+      <dt>사업자등록번호</dt><dd>421-28-01608</dd>
+      <dt>사업장 주소</dt><dd>강원특별자치도 원주시 단구로 398, 단관청솔3차아파트 상가동2동 1층 101호 (단구동)</dd>
+      <dt>고객센터</dt><dd><a href="tel:+821091421531">010-9142-1531</a> · <a href="mailto:hhh3350@naver.com">hhh3350@naver.com</a></dd>
+      <dt>통신판매업 신고번호</dt><dd>제 2026-강원원주-02474 호</dd>
+    </dl>
+    <div class="pf-links">
+      <button type="button" data-policy="terms">이용약관</button>
+      <button type="button" data-policy="privacy">개인정보처리방침</button>
+      <button type="button" class="wide" data-policy="shipping">배송 및 교환·환불 정책</button>
+    </div>
+    <p class="pf-note">훈이네과일야채 단구점은 원주 단구동 매장에서 직접 고른 과일·채소를 식당·카페에 대용량으로 준비합니다. 위 사업자 정보는 단구점 사업자등록증과 같습니다.</p>
+    <p class="pf-copy">© 2026 훈이네과일야채 단구점</p>
+  </footer>
+</main>
+
+<!-- ══ 장바구니 ══════════════════════════════════ -->
+<main class="view" id="viewCart" hidden>
+  <header class="page-hd">
+    <button class="ph-back" id="cartBack" type="button" aria-label="상품으로 돌아가기">←</button>
+    <b>장바구니</b>
+  </header>
+  <div id="cartBody"></div>
+  <div class="pfoot"><button class="cta" id="toCheckout" type="button">품목을 담아 주세요</button></div>
+</main>
+
+<!-- ══ 주문서 ════════════════════════════════════ -->
+<main class="view" id="viewCheckout" hidden>
+  <header class="page-hd">
+    <button class="ph-back" id="ckBack" type="button" aria-label="장바구니로 돌아가기">←</button>
+    <b>주문서 작성</b>
+    <span class="ph-step">무통장입금</span>
+  </header>
+
+  <div class="ckbody">
+    <section class="card">
+      <h2 class="sec-t">주문 상품</h2>
+      <div id="ckLines" class="cklines"></div>
+      <div class="cktot">
+        <div class="srow"><span>상품 합계</span><b id="ckSub">0원</b></div>
+        <div class="srow"><span>배달비</span><b>무료 (원주 시내권)</b></div>
+        <div class="srow tot"><span>결제 금액</span><b id="ckTotal">0원</b></div>
+      </div>
+    </section>
+
+    <div id="ckMin"></div>
+
+    <section class="card">
+      <h2 class="sec-t">가게 정보</h2>
+      <div class="field">
+        <label for="fShop">상호 (가게 이름) <i class="req">필수</i></label>
+        <input id="fShop" type="text" autocomplete="organization" placeholder="예) 단구동 김밥천국" maxlength="40">
+      </div>
+      <div class="field">
+        <label for="fManager">담당자 이름 <i class="req">필수</i></label>
+        <input id="fManager" type="text" autocomplete="name" placeholder="예) 김철수" maxlength="20">
+      </div>
+      <div class="field">
+        <label for="fPhone">연락처 <i class="req">필수</i></label>
+        <input id="fPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" maxlength="20">
+        <span class="fhint">배달 전에 연락드릴 수 있는 번호로 적어 주세요.</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="sec-t">배달 정보</h2>
+      <div class="field">
+        <label for="fAddr">배달 주소 <i class="req">필수</i></label>
+        <textarea id="fAddr" rows="2" placeholder="예) 원주시 단구로 000, ○○빌딩 1층" maxlength="120"></textarea>
+        <span class="fhint">원주 시내권만 배달합니다. 시외는 033-765-1531로 문의해 주세요.</span>
+      </div>
+      <div class="field">
+        <label for="fDate">받는 날짜 <i class="req">필수</i></label>
+        <input id="fDate" type="date">
+        <span class="fhint" id="fDateHint">낮 12시 마감</span>
+      </div>
+      <div class="field">
+        <label for="fTime">받는 시간 <i class="req">필수</i></label>
+        <select id="fTime"></select>
+      </div>
+      <div class="field">
+        <label for="fMemo">요청사항 <i class="opt">선택</i></label>
+        <textarea id="fMemo" rows="2" placeholder="예) 새벽 6시 이전에 놓아 주세요 / 뒷문으로" maxlength="200"></textarea>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="sec-t">현금영수증 · 입금</h2>
+      <div class="field">
+        <label for="fReceipt">현금영수증 <i class="opt">선택</i></label>
+        <select id="fReceipt">
+          <option value="none">발급하지 않음</option>
+          <option value="expense">사업자번호 (지출증빙)</option>
+          <option value="income">휴대폰번호 (소득공제)</option>
+        </select>
+      </div>
+      <div class="field" id="receiptNoBox" hidden>
+        <label for="fReceiptNo">사업자번호 / 휴대폰번호</label>
+        <input id="fReceiptNo" type="text" inputmode="numeric" placeholder="사업자번호 10자리">
+      </div>
+      <div class="field">
+        <label for="fDepositor">입금자명 <i class="opt">선택</i></label>
+        <input id="fDepositor" type="text" placeholder="상호와 같으면 비워 두세요" maxlength="30">
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="sec-t">결제</h2>
+      <p class="payhint">🏦 지금은 <b>무통장입금</b>만 받아요. 주문서를 보내고 아래 계좌로 입금해 주세요.</p>
+      <div id="ckBank"></div>
+    </section>
+
+    <label class="agree" id="agreeBox">
+      <input type="checkbox" id="fAgree">
+      <span>주문 내용과 <b>최소주문금액 · 낮 12시 마감 · 원주 시내권 배달</b> 조건을 확인했어요.</span>
+    </label>
+    <p class="paywarn" id="payWarn" hidden></p>
+  </div>
+
+  <div class="pfoot"><button class="cta" id="payBtn" type="button">0원 주문하기</button></div>
+</main>
+
+<!-- ══ 주문 완료 ═════════════════════════════════ -->
+<main class="view" id="viewDone" hidden>
+  <div class="done" id="doneBody"></div>
+</main>
+
+<!-- 하단 장바구니 바 -->
+<button class="cartbar" id="cartbar" type="button" hidden aria-label="장바구니 보기">
+  <span class="in">
+    <span class="cb-badge" id="cbBadge">0</span>
+    <span class="cb-label">장바구니 보기</span>
+    <span class="cb-amt" id="cbAmt">0원</span>
+    <span class="cb-go" aria-hidden="true">›</span>
+  </span>
+</button>
+
+<!-- 약관 · 정책 -->
+<div class="sheet" id="sheetPolicy" aria-hidden="true">
+  <div class="dim" data-close-policy></div>
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="polTitle">
+    <div class="shead"><b id="polTitle">이용약관</b><button type="button" class="x" data-close-policy aria-label="닫기">✕</button></div>
+    <div class="sbody"><div class="polbody" id="polBody"></div></div>
+    <div class="sfoot"><button type="button" class="cta" data-close-policy>확인했어요</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+</div>
+
+<script src="js/core.js?v=20261126-bulk2"></script>
+<script src="js/catalog.js?v=20261126-bulk2"></script>
+<script src="js/app.js?v=20261126-bulk2"></script>
+</body>
+</html>
