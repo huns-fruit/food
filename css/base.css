@@ -3,12 +3,16 @@
    (소매몰의 민트색 화면과 한눈에 구분되도록 색을 따로 씁니다) */
 *{box-sizing:border-box}
 :root{
-  --brand:#1E293B; --brand-d:#0F172A; --brand-l:#E7EDF5; --brand-l2:#F4F7FA;
-  --ink:#222; --ink2:#555; --ink3:#8F8F8F;
-  --line:#EDEDED; --bg:#F4F5F7; --white:#fff;
-  --red:#E8453C; --amber:#8A5400; --amber-l:#FFF7E8; --green:#157347;
-  --blue:#265FBF; --blue-l:#EEF4FF;
+  --brand:#1E293B; --brand-d:#0F172A; --brand-mid:#334155;
+  --brand-l:#E7EDF5; --brand-l2:#F1F5F9;
+  --ink:#0F172A; --ink2:#475569; --ink3:#6B7686;
+  --line:#E5E9EF; --line2:#EEF1F6; --bg:#F8FAFC; --white:#fff;
+  --red:#D93A30; --amber:#8A4B00; --amber-l:#FFF7E8; --green:#12805C;
+  --blue:#2563EB; --blue-l:#EFF5FF;
+  --sh-sm:0 1px 2px rgba(15,23,42,.05);
+  --sh-card:0 1px 2px rgba(15,23,42,.04), 0 10px 22px -18px rgba(15,23,42,.35);
   --sh:0 2px 8px rgba(0,0,0,.06);
+  --r-card:16px;
 }
 html{-webkit-text-size-adjust:100%}
 [hidden]{display:none !important}

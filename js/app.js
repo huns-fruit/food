@@ -6,15 +6,6 @@ var CUST_KEY = "hoonie_bulk_customer_v1";
 
 var state = { cat: "veg", q: "", cart: {}, view: "shop", order: null };
 
-/* 목적격 조사(을/를) 붙이기 — 받침 있는 말은 '을', 없는 말은 '를' (예: 식자재 과일을 / 식자재 채소를) */
-function withObjParticle(word){
-  var s = String(word || "");
-  if (!s) return s;
-  var c = s.charCodeAt(s.length - 1);
-  var hasJong = (c >= 0xAC00 && c <= 0xD7A3) && ((c - 0xAC00) % 28) !== 0;
-  return s + (hasJong ? "을" : "를");
-}
-
 /* ────────────────────────────────────────────────
    1. 장바구니 저장 · 계산
    ──────────────────────────────────────────────── */
@@ -105,11 +96,23 @@ function matches(p, q){
 function thumbHtml(p, cls){
   var inner;
   if (p.img && IMG[p.img]){
-    inner = '<img src="' + IMG[p.img] + '" alt="' + esc(p.name) + '" loading="lazy" decoding="async">';
+    inner = '<img src="' + IMG[p.img] + '" alt="' + esc(p.name) + '" loading="lazy" decoding="async" width="96" height="96">';
   } else {
     inner = '<span class="pemo" aria-hidden="true">' + (p.emoji || CATS[p.cat].emoji) + '</span>';
   }
-  return '<div class="' + (cls || "pthumb") + '">' + inner + '</div>';
+  var badge = "";
+  if (!cls && p.badge){
+    badge = '<span class="pbadge ' + (p.badge === "인기" ? "hot" : "pick") + '">' + esc(p.badge) + '</span>';
+  }
+  return '<div class="' + (cls || "pthumb") + '">' + inner + badge + '</div>';
+}
+/* 받침에 따라 조사를 고릅니다 (예: 식자재 과일 + 을 / 식자재 채소 + 를) */
+function josa(word, pair){
+  var s = String(word || "");
+  var code = s.charCodeAt(s.length - 1);
+  var hasJong = (code >= 0xAC00 && code <= 0xD7A3) ? ((code - 0xAC00) % 28) !== 0 : true;
+  var parts = pair.split("/");
+  return parts[hasJong ? 0 : 1];
 }
 function stepperHtml(id, qty, cls){
   return '<div class="stp ' + (cls || "") + '" data-pid="' + esc(id) + '">'
@@ -121,18 +124,17 @@ function stepperHtml(id, qty, cls){
 function prodRowHtml(p){
   var qty = state.cart[p.id] || 0;
   return '<article class="prow" data-pid="' + esc(p.id) + '">'
+    + thumbHtml(p)
     + '<div class="pleft">'
-    +   '<h3 class="pname">' + esc(p.name) + '</h3>'
     +   '<p class="punit">' + esc(p.unit) + '</p>'
+    +   '<h3 class="pname">' + esc(p.name) + '</h3>'
     +   (p.desc ? '<p class="pdesc">' + esc(p.desc) + '</p>' : '')
-    +   '<div class="pprice">' + money(p.price) + '<span>원</span></div>'
-    + '</div>'
-    + '<div class="pright">'
-    +   thumbHtml(p)
-    +   (qty
+    +   '<div class="pbottom">'
+    +     '<div class="pprice">' + money(p.price) + '<span>원</span></div>'
+    +     (qty
         ? stepperHtml(p.id, qty)
         : '<button type="button" class="padd" data-add>담기</button>')
-    +   (qty ? '<span class="pqty" aria-hidden="true">' + qty + '</span>' : '')
+    +   '</div>'
     + '</div>'
     + '</article>';
 }
@@ -203,7 +205,8 @@ function minBoxHtml(withBar){
   var t = catTotals();
   var absent = t.veg === 0 ? "veg" : (t.fruit === 0 ? "fruit" : null);
   if (absent){
-    h += '<p class="minhint">' + CATS[absent].emoji + ' ' + esc(withObjParticle(CATS[absent].label)) + ' 함께 담으면 '
+    h += '<p class="minhint">' + CATS[absent].emoji + ' ' + esc(CATS[absent].label)
+      + josa(CATS[absent].label, "을/를") + ' 함께 담으면 '
       + esc(CATS[absent].minText) + ' 이상부터 주문할 수 있어요.</p>';
   }
   h += '</section>';
