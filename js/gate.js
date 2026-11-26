@@ -209,15 +209,39 @@ function gateSubmit(e){
   }
 
   gateBlockedOff();
-  var rec = {
-    bizName: name,
-    bizNo: bizFormat(digits),
-    bizCertName: String(file.name || "사업자등록증"),
-    bizCertAttached: true,
-    verifiedAt: new Date().toISOString()
-  };
-  saveBiz(rec);
-  enterShop(rec, true);
+
+  /* 마지막으로 사장님이 등록한 DB 차단 명단까지 확인하고 입장합니다.
+     (이 파일의 BLOCKED_BIZ 는 위에서 이미 즉시 확인했습니다) */
+  var btn = $("#gateGo");
+  if (btn){ btn.disabled = true; btn.textContent = "확인 중…"; }
+  checkBizBlocked(digits).then(function(blocked){
+    if (btn){ btn.disabled = false; btn.textContent = "사업자 확인하고 입장하기"; }
+    if (blocked){
+      gateBlocked(BLOCKED_MSG);
+      logoutBiz();
+      return;
+    }
+    var rec = {
+      bizName: name,
+      bizNo: bizFormat(digits),
+      bizCertName: String(file.name || "사업자등록증"),
+      bizCertAttached: true,
+      verifiedAt: new Date().toISOString()
+    };
+    saveBiz(rec);
+    enterShop(rec, true);
+  });
+}
+
+/* 번호를 다 적고 다른 칸으로 넘어가면 DB 차단 명단을 미리 확인해 둡니다 */
+function gateCheckBlocked(v){
+  var d = bizDigits(v);
+  if (d.length !== 10) return;
+  checkBizBlocked(d).then(function(blocked){
+    if (!blocked) return;
+    gateBlocked(BLOCKED_MSG);
+    logoutBiz();
+  });
 }
 
 function initGate(){
@@ -233,6 +257,7 @@ function initGate(){
     });
     noEl.addEventListener("blur", function(){
       if (noEl.value) noEl.value = bizFormat(noEl.value);
+      gateCheckBlocked(noEl.value);
     });
   }
   var nameEl = $("#gName");

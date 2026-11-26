@@ -437,6 +437,20 @@ function submitOrder(){
   var f = readForm();
   if (!validate(f)) return;
 
+  /* 사장님이 등록한 차단 명단까지 한 번 더 확인 — 걸리면 주문을 받지 않습니다 */
+  var payBtn = $("#payBtn");
+  if (payBtn){ payBtn.disabled = true; payBtn.textContent = "확인 중…"; }
+  checkBizBlocked(state.biz.bizNo).then(function(blocked){
+    if (blocked){
+      logoutBiz();
+      showGate(null, BLOCKED_MSG);
+      return;
+    }
+    placeOrder(f);
+  });
+}
+
+function placeOrder(f){
   var now = new Date();
   var ymd = String(now.getFullYear()) + two(now.getMonth() + 1) + two(now.getDate());
   var no = ORDER_PREFIX + ymd + "-" + String(Math.floor(Math.random() * 900000) + 100000);
@@ -681,6 +695,12 @@ function init(){
     showGate(null, BLOCKED_MSG);
   } else if (bizRecordOk(biz)){
     enterShop(biz, false);
+    /* 사장님이 나중에 등록한 차단 명단까지 확인 — 걸리면 곧바로 게이트로 돌려보냅니다 */
+    checkBizBlocked(biz.bizNo).then(function(blocked){
+      if (!blocked) return;
+      logoutBiz();
+      showGate(null, BLOCKED_MSG);
+    });
   } else {
     showGate(biz, false);
   }
