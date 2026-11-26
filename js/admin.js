@@ -427,17 +427,18 @@ function tickClock(){
    로그인 전에는 아무 데이터도 부르지 않습니다. */
 var booted = false, authTimer = null, authBusy = false;
 
-function setLoginMsg(msg){
+function setLoginMsg(msg, info){
   var el = $("#loginMsg");
   if (!el) return;
   el.textContent = msg || "";
   el.hidden = !msg;
+  el.classList.toggle("info", !!info);
 }
-function lockLogin(msg){
+function lockLogin(msg, info){
   document.body.classList.add("locked");
   var g = $("#loginGate");
   if (g) g.hidden = false;
-  setLoginMsg(msg || "");
+  setLoginMsg(msg || "", info);
   var em = $("#loginEmail");
   if (em) setTimeout(function(){ try { em.focus(); } catch(e){} }, 150);
 }
@@ -532,7 +533,7 @@ function authStart(){
   var notice = "";
   try { notice = sessionStorage.getItem(AUTH_MSG_KEY) || ""; sessionStorage.removeItem(AUTH_MSG_KEY); } catch(e){}
   var s = authReadSession();
-  if (!s){ lockLogin(notice); return; }
+  if (!s){ lockLogin(notice, !/만료|맞지|못/.test(notice)); return; }
   sbSetToken(s.access_token);
   sbAuthFail = onAuthFail;
   if (!authExpired(s)){ bootAdmin(); startAuthTimer(); return; }
