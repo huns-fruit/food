@@ -93,11 +93,20 @@ function matches(p, q){
   var hay = norm(p.name) + "|" + norm(p.unit) + "|" + norm(p.desc || "") + "|" + norm(p.id);
   return hay.indexOf(q) > -1;
 }
-/* 사진이 없는 품목의 타일 색을 품목 id 로 정합니다 (같은 품목은 늘 같은 색) */
+/* 사진이 없는 품목의 타일 색 — 품목 성격(잎 · 열매 · 뿌리 · 버섯)에 맞는 색으로 정합니다
+   (같은 품목은 늘 같은 색) */
 function toneOf(p){
+  var e = String((p && p.emoji) || ""), group;
+  if (/🥬|🍃|🌿|🌱|🥦|🥑/.test(e)) group = [0, 7, 4];          /* 잎 · 샐러드 — 초록 */
+  else if (/🍅|🌶|🍓|🎃|🍉|🫑/.test(e)) group = [2, 6, 1];      /* 열매 · 고추 — 붉은 · 주황 */
+  else if (/🥕|🧄|🧅|🍠|🪷/.test(e)) group = [5, 3];            /* 뿌리 · 뿌리채소 — 갈색 · 보라 */
+  else if (/🍇|🫐/.test(e)) group = [3, 6];                    /* 포도 · 베리 — 보라 */
+  else if (/🍋|🍈|🍐|🍊/.test(e)) group = [1, 7];               /* 시트러스 · 멜론 — 노랑 */
+  else if (/🍄|⬜/.test(e)) group = [5, 4];                     /* 버섯 · 두부 — 베이지 */
+  else group = [0, 1, 2, 3, 4, 5, 6, 7];
   var s = String((p && p.id) || ""), h = 0;
   for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 9973;
-  return h % 8;
+  return group[h % group.length];
 }
 function thumbHtml(p, cls){
   var inner, tone = "";
