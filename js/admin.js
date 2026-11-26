@@ -416,7 +416,9 @@ function tickClock(){
   var p = kstParts(null);
   if (!p) return;
   var parts = p.ymd.split("-");
-  var w = ["일", "월", "화", "수", "목", "금", "토"][new Date(p.ymd + "T00:00:00+09:00").getUTCDay()];
+  /* 요일은 그 날짜의 달력 요일 — UTC 로 만들어 뽑아야 시간대에 흔들리지 않습니다 */
+  var wd = new Date(Date.UTC(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]))).getUTCDay();
+  var w = ["일", "월", "화", "수", "목", "금", "토"][wd];
   if ($("#today")) $("#today").textContent = Number(parts[1]) + "월 " + Number(parts[2]) + "일(" + w + ")";
   if ($("#clock")) $("#clock").textContent = p.hm;
 }
