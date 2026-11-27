@@ -13,6 +13,14 @@
 <link rel="stylesheet" href="css/bulk.css?v=20261126-bulk13">
 </head>
 <body>
+<!-- 🔒 식자재몰 잠금 (2026-11-27 사장님: "단구점 식자재몰은 일단 한동안 잠궈") — 풀 때는 이 블록(lockNotice ~ /lockNotice)만 지우면 된다 -->
+<style id="lockStyle">body>*:not(#lockNotice){display:none!important}#lockNotice{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;background:#0F172A;color:#fff;font-family:Pretendard,system-ui,sans-serif;text-align:center;z-index:2147483647}#lockNotice .lk{max-width:360px}#lockNotice h1{margin:14px 0 8px;font-size:22px;font-weight:800;letter-spacing:-.5px}#lockNotice p{margin:0 0 18px;font-size:14.5px;line-height:1.6;color:#CBD5E1}#lockNotice a{display:block;margin:8px 0 0;padding:13px 16px;border-radius:12px;font-size:15px;font-weight:800;text-decoration:none}#lockNotice .a1{background:#FCD34D;color:#0F172A}#lockNotice .a2{border:1.5px solid #475569;color:#fff}</style>
+<div id="lockNotice" role="alert"><div class="lk"><div style="font-size:40px">🔒</div>
+<h1>식자재몰은 잠시 쉬어요</h1>
+<p>단구점 식자재 주문은 당분간 받지 않아요.<br>식자재·대용량 문의는 매장으로 연락해 주세요.</p>
+<a class="a1" href="tel:0337651531">📞 033-765-1531 전화하기</a>
+<a class="a2" href="https://huns-fruit.github.io/">가정용 소매몰 가기</a></div></div>
+<!-- /lockNotice -->
 <div class="app">
 
 <!-- ══ 사업자 전용 입장 게이트 ═══════════════════ -->
