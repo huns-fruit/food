@@ -90,7 +90,7 @@ var BULK_VEGETABLES = [
 
   /* ── 신규: 잎 · 쌈 · 샐러드 ── */
   { id: "veg-perilla",        name: "깻잎",             unit: "1kg",                      price: 12000, emoji: "🍃", badge: "인기" },
-  { id: "veg-chive-500",      name: "부추",             unit: "1단 · 500g",               price: 2500,  emoji: "🌿" },
+  { id: "veg-chive-500",      name: "부추",             unit: "1단 · 500g",               price: 4000,  emoji: "🌿" },
   { id: "veg-chive-box",      name: "부추",             unit: "1박스 · 4kg",              price: 18000, emoji: "🌿" },
   { id: "veg-spinach-bunch",  name: "시금치",           unit: "1단 · 400g",               price: 2800,  emoji: "🥬" },
   { id: "veg-spinach-box",    name: "시금치",           unit: "1박스 · 4kg",              price: 24000, emoji: "🥬" },
